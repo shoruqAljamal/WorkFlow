@@ -18,6 +18,20 @@ namespace WorkFlow.Context.Configuration
                   .HasForeignKey(wf => wf.WFStatusId)
                   .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
+
+            entity.HasData(
+                
+                new WF()
+                {
+                    ID =1,
+                    Name = "Add User",
+                    WFStatusId = 1,
+                    CurrentProgressNumberWFStep = 0,
+                    
+                    
+                }
+                
+                );
         }
     }
 }

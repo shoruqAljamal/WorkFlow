@@ -2,13 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WorkFlow.Context;
+using WorkFlow.IRepos;
+using WorkFlow.Repos;
+using WorkFlow.Supervisors;
 
 namespace WorkFlow
 {
@@ -24,9 +30,26 @@ namespace WorkFlow
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
 
-           
+            services.AddScoped<IWFRepo, WFRepo>();
+            services.AddScoped<IWFStatusRepo, WFStatusRepo>();
+            services.AddScoped<IWFStepRepo, WFStepRepo>();
+            services.AddScoped<IWFTaskRepo, WFTaskRepo>();
+            services.AddScoped<ITestRepo, TestRepo>();
+            services.AddScoped<ISupervisor, Supervisor>();
+
+            services.AddControllers();
+            services.AddHealthChecks();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddDbContext<WFContext>(builder =>
+            {
+                builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            });
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

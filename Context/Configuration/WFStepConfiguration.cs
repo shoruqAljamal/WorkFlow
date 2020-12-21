@@ -11,7 +11,7 @@ namespace WorkFlow.Context.Configuration
     {
         public WFStepConfiguration(EntityTypeBuilder<WFStep> entity)
         {
-            entity.HasIndex(e => new { e.Number }).IsUnique();
+            entity.HasIndex(e => new { e.Number , e.WFId}).IsUnique();
 
             entity.HasOne<WFStatus>(p => p.WFStatus)
                   .WithMany()
@@ -19,10 +19,44 @@ namespace WorkFlow.Context.Configuration
                   .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
             entity.HasOne<WF>(p => p.WorkFlow)
-           .WithMany(wf=>wf.WFSteps)
+           .WithMany(wf => wf.WFSteps)
            .HasForeignKey(p => p.WFId)
            .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
+
+            entity.HasData(
+
+                new WFStep()
+                {
+                    ID = 1,
+                    WFStatusId = 1,
+                    WFId = 1,
+                    Number = 1,
+                    IsFirst = true,
+                    IsFinal = false
+
+
+                },
+                new WFStep()
+                 {   
+                        ID = 2,
+                        WFStatusId = 1,
+                        WFId = 1,
+                        Number = 2,
+                        IsFirst = false,
+                        IsFinal = false
+                    },
+                     new WFStep()
+                       {
+                        ID = 3,
+                        WFStatusId = 1,
+                        WFId = 1,
+                        Number = 3,
+                        IsFirst = false,
+                        IsFinal = true
+                       }                      
+
+                );
         }
     }
 }

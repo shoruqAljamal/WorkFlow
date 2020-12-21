@@ -11,7 +11,32 @@ namespace WorkFlow.Context.Configuration
     {
         public WFStatusConfiguration(EntityTypeBuilder<WFStatus> entity)
         {
+            entity.HasData( 
                 
+                new WFStatus()
+                {
+                    ID=1 ,
+                    Name="Create"
+                },
+                  new WFStatus()
+                  {
+                      ID =2 ,
+                      Name = "In Progress"
+                  },
+                    new WFStatus()
+                    {
+                        ID = 3,
+                        Name = "Finished"
+                    },
+                      new WFStatus()
+                      {
+                          ID = 4,
+                          Name = "Declined"
+                      }
+
+                );
+             
+
         }
     }
 }

@@ -16,6 +16,36 @@ namespace WorkFlow.Context.Configuration
            .WithMany(wf => wf.WFTasks)
            .HasForeignKey(t => t.WFId)
            .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+
+            entity.HasData(
+                
+                new WFTask() 
+                {
+                  ID =1,
+                  WFId =1,
+                  Description ="add name"
+                
+                },
+
+               new WFTask()
+               {
+                  ID = 2,
+                  WFId = 1,
+                  Description = "add gender"
+
+               },
+               new WFTask()
+               {
+                  ID = 3,
+                  WFId = 1,
+                  Description = "add age"
+
+               }
+
+
+
+
+                );
         }
     }
 }
